@@ -2,6 +2,7 @@ import socket
 from threading import Thread
 
 listacon: list[socket.socket] = []
+listanomes = {}
 
 host = socket.gethostbyname(socket.gethostname())
 port = 5000
@@ -14,6 +15,8 @@ serv.listen(5) # limites de conexões
 
 def servidor():
     global listacon
+    global listanomes
+    nome = ""
 
     while True:
         con, adr = serv.accept() # aceita conexão
@@ -24,13 +27,23 @@ def servidor():
 
             if not msg:
                 listacon.remove(con)
+                listanomes.pop(con)
                 break
             
+            msg = msg.decode("utf-8")
+
+            if nome == "":
+                nome = msg
+                listanomes[con] = nome
+                msg = f"{nome} entrou na sala"
+            else:
+                msg = f"{listanomes[con]}: {msg}"
+
+            print(msg)
+
             for i in range(len(listacon)):
                 if listacon[i] != con:
-                    listacon[i].sendall(msg)
-            
-            
+                    listacon[i].sendall(msg.encode("utf-8"))
 
 for i in range(5):
     Thread(target=servidor).start()

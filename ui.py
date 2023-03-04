@@ -7,7 +7,7 @@ class Window(QMainWindow):
     def __init__(self, conec: connection.Connection) -> None:
         super(Window, self).__init__()
         self.conec = conec
-
+        # botar seu nome ##############
         # Lista de mensagens
         self.msg_list = QListWidget(self)
         self.msg_list.move(20, 20)
@@ -33,7 +33,7 @@ class Window(QMainWindow):
         self.show()
 
     def send_button_clicked(self):
-        self.conec.enviar(self.send_line.text())
+        self.conec.enviar(self.send_line.text(), self)
         self.send_line.setText("")
 
     def receive(self, msg):
