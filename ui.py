@@ -7,13 +7,13 @@ class Window(QMainWindow):
     def __init__(self, conec: connection.Connection) -> None:
         super(Window, self).__init__()
         self.conec = conec
-        # botar seu nome ##############
+
         # Lista de mensagens
         self.msg_list = QListWidget(self)
         self.msg_list.move(20, 20)
         self.msg_list.resize(680, 330)
 
-        # linha de envio
+        # Linha de envio
         title_label = QLabel("Escreva sua mensagem:", self)
         title_label.move(20, 360)
         title_label.resize(200, 30)
